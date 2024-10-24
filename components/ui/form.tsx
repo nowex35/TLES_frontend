@@ -11,7 +11,6 @@ import {
   FormProvider,
   useFormContext,
 } from "react-hook-form"
-
 import { cn } from "@/lib/utils"
 import { Label } from "@/components/ui/label"
 
@@ -46,13 +45,30 @@ const useFormField = () => {
   const itemContext = React.useContext(FormItemContext)
   const { getFieldState, formState } = useFormContext()
 
-  const fieldState = getFieldState(fieldContext.name, formState)
-
   if (!fieldContext) {
     throw new Error("useFormField should be used within <FormField>")
   }
 
   const { id } = itemContext
+
+  // フィールドの状態を安全に取得
+  const fieldState = {
+    invalid: false,
+    isDirty: false,
+    isTouched: false,
+    error: undefined
+  }
+
+  try {
+    if (formState) {
+      fieldState.invalid = !!(formState.errors && formState.errors[fieldContext.name])
+      fieldState.isDirty = !!(formState.dirtyFields && formState.dirtyFields[fieldContext.name])
+      fieldState.isTouched = !!(formState.touchedFields && formState.touchedFields[fieldContext.name])
+      fieldState.error = formState.errors?.[fieldContext.name]
+    }
+  } catch (e) {
+    console.warn("Error accessing form state:", e)
+  }
 
   return {
     id,
@@ -60,7 +76,7 @@ const useFormField = () => {
     formItemId: `${id}-form-item`,
     formDescriptionId: `${id}-form-item-description`,
     formMessageId: `${id}-form-item-message`,
-    ...fieldState,
+    ...fieldState
   }
 }
 
@@ -175,4 +191,5 @@ export {
   FormDescription,
   FormMessage,
   FormField,
+  useFormContext,
 }

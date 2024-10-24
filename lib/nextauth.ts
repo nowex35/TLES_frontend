@@ -1,7 +1,6 @@
 import { getServerSession, type NextAuthOptions } from 'next-auth'
 import CredentialsProvider from "next-auth/providers/credentials"
 import type { JWT } from "next-auth/jwt"
-import { access } from 'fs'
 
 // NextAuthとJWTの型を拡張してアクセストークンとリフレッシュトークンを追加
 declare module "next-auth" {
@@ -24,7 +23,7 @@ export interface UserType {
     name: string
     email: string
     avatar: string | undefined
-    instroduction: string
+    introduction: string
 }
 
 //共通のAPIリクエスト
@@ -40,7 +39,7 @@ const fetchAPI = async (url: string, options: RequestInit) => {
         throw new Error("APIでエラーが発生しました")
     }
 
-    return response.json
+    return response.json()
 }
 
 //アクセストークンの検証
@@ -97,8 +96,8 @@ export const authOptions: NextAuthOptions = {
             name: "Credentials",
             credentials: {
                 //メールアドレスとパスワードの入力フォーム
-                email: { label: "Email", type: "email" },
-                password: { label: "Password", type: "password" },
+                email: { label: "Email", type: "text" },
+                password: { label: "password", type: "password" },
             },
             async authorize(credentials) {
                 if ( !credentials?.email || !credentials?.password ) {

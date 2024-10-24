@@ -21,12 +21,13 @@ const UserNavigation = ({ user }: UserNavigationProps) => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger>
-                <div className="relative w-10 flex-shrink-0">
+                <div className="relative w-10 h-10 flex-shrink-0">
                     <Image
                         src={user.avatar || "/default.png"}
                         className="rounded-full object-cover"
                         alt={user.name || "avatar"}
                         fill
+                        sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 10vw"
                     />
                 </div>
             </DropdownMenuTrigger>
@@ -44,13 +45,23 @@ const UserNavigation = ({ user }: UserNavigationProps) => {
                 <DropdownMenuSeparator />
 
                 <Link href="/post/new">
-                    <DropdownMenuItem className="cursor-pointer">新規投稿</DropdownMenuItem>
+                    <DropdownMenuItem className="cursor-pointer">
+                        新規投稿
+                    </DropdownMenuItem>
+                </Link>
+
+                <Link href="/settings/profile">
+                    <DropdownMenuItem className="cursor-pointer">
+                        アカウント設定
+                    </DropdownMenuItem>
                 </Link>
 
                 <DropdownMenuItem
                 onSelect={async () => {
                     await signOut({ callbackUrl: "/" }) //onSelectでログアウト処理を実行
-                }}>
+                }}
+                className="text-red-600 cursor-pointer"
+                >
                     ログアウト
                 </DropdownMenuItem>
             </DropdownMenuContent>

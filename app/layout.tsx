@@ -8,8 +8,8 @@ import ToastProvider from "@/components/providers/ToastProvider" //トースト�
 const inter = Inter({ subsets: ['latin'] }) // Google FontsからInterを読み込む
 
 export const metadata: Metadata = {
-  title: 'Next.js+DRF入門',
-  description: 'Next.js+DRF入門',
+  title: 'Next.js+DRF',
+  description: 'Next.js+DRF',
 }
 
 interface RootLayoutProps {
@@ -18,7 +18,7 @@ interface RootLayoutProps {
   childrenはこのレイアウトに含まれるコンポーネントのことで、
   ReactNode型はReactで使われる要素の型の一つでJSX・文字列・nullなどが入る
   */
-  children: React.ReactNode 
+  children: React.ReactNode
 }
 
 const RootLayout = async ({ children }: RootLayoutProps) => {
@@ -27,9 +27,9 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
   return (
     <html lang="ja">
       <body className={inter.className}>
-        <AuthProvider user={user}> {/*userに{user}のもつ認証情報を渡し、以下で使用*/}
+        <AuthProvider > {/*userに{user}のもつ認証情報を渡し、以下で使用*/}
           <div className="flex min-h-screen flex-col">
-            <Navigation /> {/*ナビゲーションバーのレンダリング*/}
+            <Navigation user={user}/> {/*ナビゲーションバーのレンダリング*/}
             <ToastProvider /> {/*トーストプロバイダーのレンダリング、通知やアラート（トースト通知）を表示する*/}
             
             <main className="container mx-auto max-w-screen-md flex-1 px-2">
