@@ -49,7 +49,7 @@ const UserNavigation = ({ user }: UserNavigationProps) => {
 
                 <DropdownMenuItem
                 onSelect={async () => {
-                    await signOut({ callbackUrl: "/" })
+                    await signOut({ callbackUrl: "/" }) //onSelectでログアウト処理を実行
                 }}>
                     ログアウト
                 </DropdownMenuItem>

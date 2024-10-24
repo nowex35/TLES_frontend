@@ -6,7 +6,7 @@ import UserNavigation from "@/components/auth/UserNavigation"
 import Link from "next/link"
 
 interface NavigationProps {
-    user: UserType | null
+    user: UserType | null //ユーザー情報の型で、存在するならUserTypeを、存在しないならnullを指定
 }
 //ナビゲーション
 const Navigation = ({ user }:NavigationProps) => {
