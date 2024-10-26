@@ -48,7 +48,7 @@ const verifyAccessToken = async (token: JWT) => {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({ token: token.accessToken }),
-    }).then((res) => res.ok )
+    }).then((res) => res.ok ) //resはfetchAPIの戻り値
 }
 
 //アクセストークンの更新

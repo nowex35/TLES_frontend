@@ -194,7 +194,7 @@ export const getUserDetail = async ({ userId }: GetUserDetailProps) => {
     }
 
     //APIからユーザー詳細を取得
-    const result = await fetchAPI(`/api/auth/users/${userId}/`, options)
+    const result = await fetchAPI(`/api/users/${userId}/`, options)
 
     if (!result.success) {
         console.error(result.error)
