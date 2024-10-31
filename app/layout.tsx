@@ -8,8 +8,8 @@ import ToastProvider from "@/components/providers/ToastProvider" //トースト�
 const inter = Inter({ subsets: ['latin'] }) // Google FontsからInterを読み込む
 
 export const metadata: Metadata = {
-  title: 'Next.js+DRF',
-  description: 'Next.js+DRF',
+  title: 'TLES',
+  description: 'チケット分析アプリ',
 }
 
 interface RootLayoutProps {
@@ -39,14 +39,25 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
             {/* フッター */}
             <footer className="py-5">
               <div className="text-center text-sm">
-                Copyright © All rights reserved | {" "}
+                Analytics for   {" "}
                 <a 
-                href="https://www.youtube.com/@fullstackchannel"
+                href="https://tsukubalive.studio.site/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline"
                 >
-                  FullStack Channel
+                  TSUKUBA LIVE!
+                </a>
+              </div>
+              <div className="text-center text-sm">
+                Contributed by   {" "}
+                <a 
+                href="https://github.com/nowex35"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline"
+                >
+                  nowex35
                 </a>
               </div>
             </footer>
