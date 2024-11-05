@@ -30,12 +30,52 @@ const fetchAPI = async (url: string, options: RequestInit) => {
     }
 }
 
+interface ticketDataProps {
+    ticket_id: string
+    order_number: number
+    quantity: number
+    purchase_datetime: string
+    ticket_type: string
+    ticket_price: number
+    seat_type: string
+    coupon_applied: boolean
+    category: string
+    nationality: string
+    gender: string
+    age_group: string
+    school_year: string
+    department: string
+    referral_source: string
+    attendance_count: number
+    play_freq: string
+    viewing_freq: string
+    special_viewing_freq: string
+    event_id: number
+}
+
+export const getTicketData = async () => {
+    const options = {
+        method: "GET",
+    }
+
+    //チケットデータを取得
+    const result = await fetchAPI("/api/tickets/retrieve/", options)
+    if (!result.success) {
+        console.error(result.error)
+        return { success: false, ticketData: null }
+    }
+
+    const ticketData: ticketDataProps[] = result.data
+
+    return { success: true, ticketData: ticketData }
+}
 interface TemporarrySignUpProps {
     name: string
     email: string
     password: string
     rePassword: string
 }
+
 
 //アカウントの仮登録
 export const temporarrySignup = async ({
