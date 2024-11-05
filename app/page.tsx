@@ -1,5 +1,5 @@
 // メインページ
-import { getAuthSession, UserType } from "@/lib/nextauth";
+import { getAuthSession, UserType } from "@/components/lib/nextauth";
 import Home from "@/components/home/Home";
 
 

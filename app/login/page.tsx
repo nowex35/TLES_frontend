@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation"
-import { getAuthSession } from "@/lib/nextauth"
+import { getAuthSession } from "@/components/lib/nextauth"
 import Login from "@/components/auth/Login"
 
 //ログインページ

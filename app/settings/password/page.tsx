@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation"
-import { getAuthSession } from "@/lib/nextauth"
+import { getAuthSession } from "@/components/lib/nextauth"
 import Password from "@/components/settings/Password"
 
 //パスワード変更ページ
