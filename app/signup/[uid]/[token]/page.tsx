@@ -1,6 +1,6 @@
 import {redirect} from "next/navigation"
 import { completeSignup } from "@/actions/user"
-import { getAuthSession } from "@/lib/nextauth"
+import { getAuthSession } from "@/components/lib/nextauth"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 

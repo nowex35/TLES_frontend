@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Loader2 } from "lucide-react"
 import { updatePassword } from "@/actions/user"
-import { UserType } from "@/lib/nextauth"
+import { UserType } from "@/components/lib/nextauth"
 import toast from "react-hot-toast"
 
 //入力データの検証ルールを定義

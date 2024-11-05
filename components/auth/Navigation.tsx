@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { UserType } from "@/lib/nextauth"
+import { UserType } from "@/components/lib/nextauth"
 import UserNavigation from "@/components/auth/UserNavigation"
 import Link from "next/link"
 

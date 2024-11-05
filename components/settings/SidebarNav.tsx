@@ -1,7 +1,7 @@
 "use client"
 
 import { usePathname } from "next/navigation"
-import { cn } from "@/lib/utils"
+import { cn } from "@/components/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import Link from "next/link"
 

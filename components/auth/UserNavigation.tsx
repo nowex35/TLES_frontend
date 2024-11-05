@@ -8,7 +8,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { signOut } from "next-auth/react"
-import { UserType } from "@/lib/nextauth"
+import { UserType } from "@/components/lib/nextauth"
 import Link from "next/link"
 import Image from "next/image"
 
