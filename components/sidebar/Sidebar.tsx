@@ -39,6 +39,10 @@ const items = [
         title: "Chart",
         url: "#",
         icon: ChartNoAxesCombined,
+        sub: {
+            title: "Category Chart",
+            url: "../charts/category/",
+        }
     },
     {
         title: "Calendar",
@@ -73,6 +77,17 @@ const MySidebar = ({ user }:NavigationProps) => {
                         <span>{item.title}</span>
                       </a>
                     </SidebarMenuButton>
+                    {item.sub && (
+                      <SidebarMenu>
+                        <SidebarMenuItem>
+                          <SidebarMenuButton asChild>
+                            <a href={item.sub.url}>
+                              <span>{item.sub.title}</span>
+                            </a>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      </SidebarMenu>
+                    )}
                   </SidebarMenuItem>
                 ))}
               </SidebarMenu>

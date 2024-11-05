@@ -1,8 +1,6 @@
 "use client"
 
 import { UserType } from "@/components/lib/nextauth"
-import { useEffect } from "react"
-import { useRouter } from "next/navigation"
 
 interface HomeProps {
     user: UserType | null
