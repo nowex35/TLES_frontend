@@ -24,6 +24,7 @@ import { url } from "inspector"
 import { getAuthSession } from "@/components/lib/nextauth"
 import { User } from "next-auth"
 import { UserType } from "@/components/lib/nextauth"
+import { title } from "process"
 
 interface NavigationProps {
     user: UserType | null
@@ -39,10 +40,32 @@ const items = [
         title: "Chart",
         url: "#",
         icon: ChartNoAxesCombined,
-        sub: {
+        sub: [
+          {
             title: "Category Chart",
             url: "../charts/category/",
-        }
+        },
+        {
+          title: "Gender Chart",
+          url: "../charts/gender/",
+        },
+        {
+          title: "Grade Chart",
+          url: "../charts/grade/",
+        },
+        {
+          title: "PlayFreq Chart",
+          url: "../charts/playfreq/",
+        },
+        {
+          title: "ViewingFreq Chart",
+          url: "../charts/viewingfreq/",
+        },
+        {
+          title: "SpecialViewingFreq Chart",
+          url: "../charts/sp_viewingfreq/",
+        },
+      ]
     },
     {
         title: "Calendar",
@@ -79,13 +102,15 @@ const MySidebar = ({ user }:NavigationProps) => {
                     </SidebarMenuButton>
                     {item.sub && (
                       <SidebarMenu>
-                        <SidebarMenuItem>
-                          <SidebarMenuButton asChild>
-                            <a href={item.sub.url}>
-                              <span>{item.sub.title}</span>
-                            </a>
-                          </SidebarMenuButton>
-                        </SidebarMenuItem>
+                        {item.sub.map((subItem) => (
+                          <SidebarMenuItem key={subItem.title}>
+                            <SidebarMenuButton asChild>
+                              <a href={subItem.url}>
+                                <span>{subItem.title}</span>
+                              </a>
+                            </SidebarMenuButton>
+                          </SidebarMenuItem>
+                        ))}
                       </SidebarMenu>
                     )}
                   </SidebarMenuItem>

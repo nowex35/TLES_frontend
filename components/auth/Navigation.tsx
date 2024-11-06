@@ -14,7 +14,7 @@ const Navigation = ({ user }:NavigationProps) => {
         <header className="shadow-lg shadow-gray-100 mb-10">
             <div className="container mx-auto flex max-w-screen-md items-center justify-between">
                 <Link href="/" className="cursor-pointer text-xl font-bold">
-                TLEye's System
+                TLEyes System
                 </Link>
                 {user ? (
                     <div>

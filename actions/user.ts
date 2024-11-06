@@ -43,7 +43,7 @@ interface ticketDataProps {
     nationality: string
     gender: string
     age_group: string
-    school_year: string
+    grade: string
     department: string
     referral_source: string
     attendance_count: number
@@ -56,15 +56,15 @@ interface ticketDataProps {
 export const getTicketData = async () => {
     const options = {
         method: "GET",
+        cache: "no-store" as RequestCache,
     }
 
     //チケットデータを取得
     const result = await fetchAPI("/api/tickets/retrieve/", options)
     if (!result.success) {
-        console.error(result.error)
+        console.error("チケットデータ取得失敗:",result.error)
         return { success: false, ticketData: null }
     }
-
     const ticketData: ticketDataProps[] = result.data
 
     return { success: true, ticketData: ticketData }
