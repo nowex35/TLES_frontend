@@ -1,41 +1,15 @@
 "use client"
 
-import React, { useEffect, useState } from "react";
-import { getTicketData } from "@/actions/user";
+import React from "react";
+import CategoryPieComponent from "@/components/charts/AllCategoryPieCharts";
 
-const CategoryDisplay: React.FC = () => {
-    const [categories, setCategories] = useState<string[]>([]);
-    const [error, setError] = useState<string | null>(null);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const result = await getTicketData();
-            if (result.success) {
-                // チケットデータからカテゴリーのみを抽出
-                const categoryList = result.ticketData.map((ticket) => ticket.category);
-                setCategories(categoryList);
-            } else {
-                setError("データの取得に失敗しました");
-            }
-        };
-
-        fetchData();
-    }, []);
-
+const Page: React.FC = () => {
     return (
         <div>
-            <h1>カテゴリー一覧</h1>
-            {error ? (
-                <p>{error}</p>
-            ) : (
-                <ul>
-                    {categories.map((category, index) => (
-                        <li key={index}>{category}</li>
-                    ))}
-                </ul>
-            )}
+            <h1>カテゴリー割合グラフ</h1>
+            <CategoryPieComponent />
         </div>
-    );
-};
+    )
+}
 
-export default CategoryDisplay;
+export default Page
