@@ -14,16 +14,10 @@ interface EventData {
 }
 
 const PlaySportsPieComponent: React.FC = () => {
-    const { data: ticketData, loading, error } = useFetchData()
+    const { data: ticketData, loading} = useFetchData()
 
     if (loading) {
         return <p>ロード中...</p>;
-    }
-    if (error) {
-        return <p>{error}</p>;
-    }
-    if (!ticketData.length) {
-        return <p>データがありません</p>
     }
 
     const eventPlayFreqData = aggregateData(ticketData, 'PlayFreqCounts', 'play_freq')
