@@ -14,16 +14,10 @@ interface EventData {
 }
 
 const AttendanceCountPieComponent: React.FC = () => {
-    const { data: ticketData, loading, error } = useFetchData()
+    const { data: ticketData, loading} = useFetchData()
 
     if (loading) {
         return <p>ロード中...</p>;
-    }
-    if (error) {
-        return <p>{error}</p>;
-    }
-    if (!ticketData.length) {
-        return <p>データがありません</p>
     }
 
     const eventAttendanceCountData = aggregateData(ticketData, 'attendanceCountCounts', 'attendance_count')

@@ -13,16 +13,10 @@ interface EventData {
 }
 
 const DaySalesComponent: React.FC = () => {
-    const { data: ticketData, loading, error } = useFetchData()
+    const { data: ticketData, loading} = useFetchData()
 
     if (loading) {
         return <p>ロード中...</p>;
-    }
-    if (error) {
-        return <p>{error}</p>;
-    }
-    if (!ticketData.length) {
-        return <p>データがありません</p>
     }
 
     const eventDaySalesData = Object.values(ticketData.reduce((acc: any, ticket: any) => {

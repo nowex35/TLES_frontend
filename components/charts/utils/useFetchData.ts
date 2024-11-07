@@ -5,7 +5,6 @@ import { toast } from "react-hot-toast";
 const useFetchData = () => {
     const [data, setData] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -21,7 +20,6 @@ const useFetchData = () => {
                 }
             } catch (err) {
                 const errorMessage = err instanceof Error ? err.message : "不明なエラーが発生しました";
-                setError(errorMessage);
                 toast.error(errorMessage);
             } finally {
                 setLoading(false);
@@ -31,7 +29,7 @@ const useFetchData = () => {
         fetchData();
     }, []);
 
-    return { data, loading, error };
+    return { data, loading};
 };
 
 export default useFetchData;
