@@ -46,7 +46,7 @@ interface ticketDataProps {
     grade: string
     department: string
     referral_source: string
-    attendance_count: number
+    attendance_count: string
     play_freq: string
     viewing_freq: string
     special_viewing_freq: string

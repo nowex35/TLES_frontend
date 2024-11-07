@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react"
-import { getTicketData } from "@/actions/user"
+import React from "react"
 import PlaySportsDisplay from "./PlayFreqPieChart"
-import { toast } from "react-hot-toast"
 import AllLegends from "./AllLegends"
 import useFetchData from "./utils/useFetchData"
+import { aggregateData } from "./utils/dataAggregator"
 
 interface CountAry {
     [play_freq: string]: number
@@ -27,20 +26,13 @@ const PlaySportsPieComponent: React.FC = () => {
         return <p>データがありません</p>
     }
 
-    const eventCategoryData = Object.values(ticketData.reduce((acc, ticket) => {
-        const { event_id, play_freq } = ticket;
-        if (!acc[event_id]) {
-            acc[event_id] = { eventId: Number(event_id), PlayFreqCounts: {} };
-        }
-        acc[event_id].PlayFreqCounts[play_freq] = (acc[event_id].PlayFreqCounts[play_freq] || 0) + 1;
-        return acc;
-    }, {} as Record<number, EventData>))
+    const eventPlayFreqData = aggregateData(ticketData, 'PlayFreqCounts', 'play_freq')
 
     return (
         <>
             <AllLegends type="playFreq" />
             <div className="flex flex1">
-            {eventCategoryData.map((eventData, index) => (
+            {eventPlayFreqData.map((eventData, index) => (
                 <PlaySportsDisplay key={eventData.eventId} eventData={eventData} />
             ))}
             </div>

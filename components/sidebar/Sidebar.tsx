@@ -10,6 +10,8 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
     SidebarFooter,
+    SidebarMenuSub,
+    SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
 import {
     DropdownMenu,
@@ -17,6 +19,7 @@ import {
     DropdownMenuContent,
     DropdownMenuItem,
 } from "@/components/ui/dropdown-menu"
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/components/ui/collapsible"
 import { signOut } from "next-auth/react"
 import SignOutButton from "../signoutbutton/SignOutButton"
 import Link from "next/link"
@@ -30,43 +33,56 @@ interface NavigationProps {
     user: UserType | null
 }
 
+const Chartitem = {
+  title: "Chart",
+  url: "#",
+  icon: ChartNoAxesCombined,
+  sub: [
+    {
+      title: "Category Chart",
+      url: "../charts/category/",
+    },
+    {
+      title: "Gender Chart",
+      url: "../charts/gender/",
+    },
+    {
+      title: "Grade Chart",
+      url: "../charts/grade/",
+    },
+    {
+      title: "PlayFreq Chart",
+      url: "../charts/playfreq/",
+    },
+    {
+      title: "ViewingFreq Chart",
+      url: "../charts/viewingfreq/",
+    },
+    {
+      title: "SpecialViewingFreq Chart",
+      url: "../charts/sp_viewingfreq/",
+    },
+    {
+      title: "Age Chart",
+      url: "../charts/age/",
+    },
+    {
+      title: "Department Chart",
+      url: "../charts/department/",
+    },
+    {
+      title: "AttendanceCount Chart",
+      url: "../charts/attendancecount/",
+    },
+    {
+      title: "DaySales Chart",
+      url: "../charts/daysales/",
+    },
+  ]
+}
+
+
 const items = [
-    {
-        title: "Home",
-        url: "/",
-        icon: Home,
-    },
-    {
-        title: "Chart",
-        url: "#",
-        icon: ChartNoAxesCombined,
-        sub: [
-          {
-            title: "Category Chart",
-            url: "../charts/category/",
-        },
-        {
-          title: "Gender Chart",
-          url: "../charts/gender/",
-        },
-        {
-          title: "Grade Chart",
-          url: "../charts/grade/",
-        },
-        {
-          title: "PlayFreq Chart",
-          url: "../charts/playfreq/",
-        },
-        {
-          title: "ViewingFreq Chart",
-          url: "../charts/viewingfreq/",
-        },
-        {
-          title: "SpecialViewingFreq Chart",
-          url: "../charts/sp_viewingfreq/",
-        },
-      ]
-    },
     {
         title: "Calendar",
         url: "#",
@@ -92,17 +108,25 @@ const MySidebar = ({ user }:NavigationProps) => {
             <SidebarGroupLabel>Application</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                {items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
-                      <a href={item.url}>
-                        <item.icon />
-                        <span>{item.title}</span>
-                      </a>
-                    </SidebarMenuButton>
-                    {item.sub && (
-                      <SidebarMenu>
-                        {item.sub.map((subItem) => (
+                <SidebarMenuItem key="Home">
+                  <SidebarMenuButton asChild>
+                    <a href="/">
+                      <Home />
+                      <span>Home</span>
+                    </a>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <Collapsible defaultOpen className="group/collapsible">
+                  <SidebarMenuItem key="Chart">
+                    <CollapsibleTrigger asChild>
+                      <SidebarMenuButton>
+                        <ChartNoAxesCombined />
+                        <span>Chart</span>
+                      </SidebarMenuButton>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                      <SidebarMenuSub>
+                        {Chartitem.sub.map((subItem) => (
                           <SidebarMenuItem key={subItem.title}>
                             <SidebarMenuButton asChild>
                               <a href={subItem.url}>
@@ -111,8 +135,18 @@ const MySidebar = ({ user }:NavigationProps) => {
                             </SidebarMenuButton>
                           </SidebarMenuItem>
                         ))}
-                      </SidebarMenu>
-                    )}
+                      </SidebarMenuSub>
+                    </CollapsibleContent>
+                  </SidebarMenuItem>
+                </Collapsible>
+                {items.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild>
+                      <a href={item.url}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </a>
+                    </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
               </SidebarMenu>
