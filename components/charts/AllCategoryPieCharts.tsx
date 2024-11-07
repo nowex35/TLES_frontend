@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react"
-import { getTicketData } from "@/actions/user"
+import React from "react"
 import CategoryDisplay from "./CategoryPieChart"
-import { toast } from "react-hot-toast"
 import AllLegends from "./AllLegends"
 import useFetchData from "./utils/useFetchData"
+import { aggregateData } from "./utils/dataAggregator"
 
 interface CountAry {
     [category: string]: number
@@ -27,14 +26,7 @@ const CategoryPieComponent: React.FC = () => {
         return <p>データがありません</p>
     }
 
-    const eventCategoryData = Object.values(ticketData.reduce((acc, ticket) => {
-        const { event_id, category } = ticket;
-        if (!acc[event_id]) {
-            acc[event_id] = { eventId: Number(event_id), categoryCounts: {} };
-        }
-        acc[event_id].categoryCounts[category] = (acc[event_id].categoryCounts[category] || 0) + 1;
-        return acc;
-    }, {} as Record<number, EventData>))
+    const eventCategoryData = aggregateData(ticketData, 'categoryCounts', 'category')
 
     return (
         <>

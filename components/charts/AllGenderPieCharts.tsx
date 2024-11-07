@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react"
-import { getTicketData } from "@/actions/user"
+import React from "react"
 import GenderDisplay from "./GenderPieChart"
-import { toast } from "react-hot-toast"
 import AllLegends from "./AllLegends"
 import useFetchData from "./utils/useFetchData"
+import { aggregateData } from "./utils/dataAggregator"
 
 interface CountAry {
     [gender: string]: number
@@ -27,14 +26,7 @@ const GenderPieComponent: React.FC = () => {
         return <p>データがありません</p>
     }
 
-    const eventGenderData = Object.values(ticketData.reduce((acc, ticket) => {
-        const { event_id, gender } = ticket
-        if (!acc[event_id]) {
-            acc[event_id] = { eventId: Number(event_id), genderCounts: {} }
-        }
-        acc[event_id].genderCounts[gender] = (acc[event_id].genderCounts[gender] || 0) + 1
-        return acc
-    }, {} as Record<number, EventData>))
+    const eventGenderData = aggregateData(ticketData, 'genderCounts','gender')
 
     return (
         <>

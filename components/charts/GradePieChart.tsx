@@ -1,5 +1,4 @@
 import React from "react"
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "recharts"
 import { GRADE_COLORS } from "./utils/colors"
 import CustomPieChart from "./CustomPieChart"
 
@@ -17,7 +16,7 @@ interface EventProps {
 }
 
 const GradeDisplay: React.FC<EventProps> = ( {eventData} ) => {
-    const data = Object.entries(eventData.gradeCounts).map(([name, value]) => ({ name, value }))
+    const data = Object.entries(eventData.gradeCounts).sort(([, valueA], [, valueB]) => valueB - valueA).map(([name, value]) => ({ name, value }))
 
     return (
             <div style={{ width: "100%", height: 60 }}> {/* 高さを調整 */}

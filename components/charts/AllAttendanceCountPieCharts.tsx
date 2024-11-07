@@ -1,19 +1,19 @@
 import React from "react"
-import GradeDisplay from "./GradePieChart"
+import AttendanceCountDisplay from "./AttendanceCountPieChart"
 import AllLegends from "./AllLegends"
 import useFetchData from "./utils/useFetchData"
 import { aggregateData } from "./utils/dataAggregator"
 
 interface CountAry {
-    [category: string]: number
+    [attendance_count: string]: number
 }
 
 interface EventData {
     eventId: number
-    gradeCounts: CountAry
+    attendanceCountCounts: CountAry
 }
 
-const CategoryPieComponent: React.FC = () => {
+const AttendanceCountPieComponent: React.FC = () => {
     const { data: ticketData, loading, error } = useFetchData()
 
     if (loading) {
@@ -26,20 +26,18 @@ const CategoryPieComponent: React.FC = () => {
         return <p>データがありません</p>
     }
 
-    const filteredTicketData = ticketData.filter(ticket => ticket.grade !== "筑波大生でない");
-
-    const eventGradeData = aggregateData(filteredTicketData, 'gradeCounts', 'grade')
+    const eventAttendanceCountData = aggregateData(ticketData, 'attendanceCountCounts', 'attendance_count')
 
     return (
         <>
-            <AllLegends type="grade" />
+            <AllLegends type="attendance" />
             <div className="flex flex1">
-            {eventGradeData.map((eventData, index) => (
-                <GradeDisplay key={eventData.eventId} eventData={eventData} />
+            {eventAttendanceCountData.map((eventData, index) => (
+                <AttendanceCountDisplay key={eventData.eventId} eventData={eventData} />
             ))}
             </div>
         </>
     )
 }
 
-export default CategoryPieComponent;
+export default AttendanceCountPieComponent;
