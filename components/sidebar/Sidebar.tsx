@@ -78,6 +78,10 @@ const Chartitem = {
       title: "DaySales Chart",
       url: "../charts/daysales/",
     },
+    {
+      title: "referral_source Chart",
+      url: "../charts/refsource/",
+    },
   ]
 }
 
