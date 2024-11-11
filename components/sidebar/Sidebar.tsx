@@ -79,6 +79,10 @@ const Chartitem = {
       url: "../charts/daysales/",
     },
     {
+      title: "SalesByTimeSlot Chart",
+      url: "../charts/salesbytimeslot/",
+    },
+    {
       title: "referral_source Chart",
       url: "../charts/refsource/",
     },
