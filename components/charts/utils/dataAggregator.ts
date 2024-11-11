@@ -40,3 +40,22 @@ export const aggregateSalesQuantity = (ticketData: any[], referralFilter: string
         return acc;
     }, {}));
 };
+
+export const aggregateReferralSource = (ticketData: any[]) => {
+    return Object.values(ticketData.reduce((acc: any, ticket: any) => {
+        const { event_id, referral_source } = ticket;
+
+        if (!acc[event_id]) {
+            acc[event_id] = { eventId: Number(event_id), refCounts: {} };
+        }
+
+        referral_source.split(',').map(source => source.trim()).forEach(source => {
+            if (!acc[event_id].refCounts[source]) {
+                acc[event_id].refCounts[source] = 0;
+            }
+            acc[event_id].refCounts[source] += 1;
+        });
+
+        return acc;
+    }, {}));
+};
