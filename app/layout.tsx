@@ -33,7 +33,7 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
           <AuthProvider > {/*userに{user}のもつ認証情報を渡し、以下で使用*/}
             <ToastProvider /> {/*トーストプロバイダーのレンダリング、通知やアラート（トースト通知）を表示する*/}
             <MySidebar user={user} />
-            <main className="container mx-auto max-w-screen-md flex-1 px-2 py-10">
+            <main className="container mx-auto max-w-screen-full flex-1 px-2 py-10">
               {children}
             </main>
           </AuthProvider>
