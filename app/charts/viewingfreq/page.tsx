@@ -1,13 +1,12 @@
-"use client"
-
-import React from "react";
+import { getAuthSession } from "@/components/lib/nextauth";
 import ViewingFreqPieComponent from "@/components/charts/AllViewingPieCharts";
 
-const Page: React.FC = () => {
+const Page = async () => {
+    const user = await getAuthSession();
     return (
         <div>
             <h1>スポーツ観戦頻度グラフ</h1>
-            <ViewingFreqPieComponent />
+            <ViewingFreqPieComponent user={user} />
         </div>
     )
 }

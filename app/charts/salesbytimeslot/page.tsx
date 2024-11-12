@@ -1,15 +1,14 @@
-"use client"
-
-import React from "react";
+import { getAuthSession } from "@/components/lib/nextauth";
 import SalesByTimeSlotComponent from "@/components/charts/AllSalesByTimeSlotCharts";
 
-const Page: React.FC = () => {
+const SalesByTimeSlotPage = async () => {
+    const user = await getAuthSession();
     return (
         <div>
             <h1>時間帯別売上割合グラフ</h1>
-            <SalesByTimeSlotComponent />
+            <SalesByTimeSlotComponent user={user} />
         </div>
     )
 }
 
-export default Page
+export default SalesByTimeSlotPage;

@@ -1,15 +1,14 @@
-"use client"
-
-import React from "react";
+import { getAuthSession } from "@/components/lib/nextauth";
 import RefSourceComponent from "@/components/charts/AllRefSourceCharts";
 
-const Page: React.FC = () => {
+const RefSourcePage = async () => {
+    const user = await getAuthSession();
     return (
         <div>
             <h1>流入経路割合グラフ</h1>
-            <RefSourceComponent />
+            <RefSourceComponent user={user} />
         </div>
     )
 }
 
-export default Page
+export default RefSourcePage

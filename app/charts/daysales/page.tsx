@@ -1,15 +1,14 @@
-"use client"
-
-import React from "react";
+import { getAuthSession } from "@/components/lib/nextauth";
 import DaySalesComponent from "@/components/charts/AllDaySalesCharts";
 
-const Page: React.FC = () => {
+const DaySalesPage = async () => {
+    const user = await getAuthSession();
     return (
         <div>
             <h1>日別売上グラフ</h1>
-            <DaySalesComponent />
+            <DaySalesComponent user={user} />
         </div>
     )
 }
 
-export default Page
+export default DaySalesPage

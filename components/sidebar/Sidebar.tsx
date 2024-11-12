@@ -124,29 +124,33 @@ const MySidebar = ({ user }:NavigationProps) => {
                     </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
-                <Collapsible defaultOpen className="group/collapsible">
-                  <SidebarMenuItem key="Chart">
-                    <CollapsibleTrigger asChild>
-                      <SidebarMenuButton>
-                        <ChartNoAxesCombined />
-                        <span>Chart</span>
-                      </SidebarMenuButton>
-                    </CollapsibleTrigger>
-                    <CollapsibleContent>
-                      <SidebarMenuSub>
-                        {Chartitem.sub.map((subItem) => (
-                          <SidebarMenuItem key={subItem.title}>
-                            <SidebarMenuButton asChild>
-                              <a href={subItem.url}>
-                                <span>{subItem.title}</span>
-                              </a>
-                            </SidebarMenuButton>
-                          </SidebarMenuItem>
-                        ))}
-                      </SidebarMenuSub>
-                    </CollapsibleContent>
-                  </SidebarMenuItem>
-                </Collapsible>
+                { user ? (
+                  <Collapsible defaultOpen className="group/collapsible">
+                    <SidebarMenuItem key="Chart">
+                      <CollapsibleTrigger asChild>
+                        <SidebarMenuButton>
+                          <ChartNoAxesCombined />
+                          <span>Chart</span>
+                        </SidebarMenuButton>
+                      </CollapsibleTrigger>
+                      <CollapsibleContent>
+                        <SidebarMenuSub>
+                          {Chartitem.sub.map((subItem) => (
+                            <SidebarMenuItem key={subItem.title}>
+                              <SidebarMenuButton asChild>
+                                <a href={subItem.url}>
+                                  <span>{subItem.title}</span>
+                                </a>
+                              </SidebarMenuButton>
+                            </SidebarMenuItem>
+                          ))}
+                        </SidebarMenuSub>
+                      </CollapsibleContent>
+                    </SidebarMenuItem>
+                  </Collapsible>
+                ) : (
+                  <></>
+                )}
                 {items.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild>

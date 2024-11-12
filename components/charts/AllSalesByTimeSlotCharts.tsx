@@ -1,10 +1,18 @@
+"use client"
+
 import React, { useEffect, useState } from "react";
 import SalesByTimeSlotDisplay from "./SalesByTimeSlotChart";
 import useFetchData from "./utils/useFetchData";
 import { aggregateSalesQuantityByTimeSlot } from "./utils/dataAggregator";
 import { Combobox } from "@/components/combobox/Combobox";
+import { UserType } from "@/components/lib/nextauth";
+import { Skeleton } from "@/components/ui/skeleton";
 
-const SalesByTimeSlotComponent: React.FC = () => {
+interface SalesByTimeSlotComponentProps {
+    user: UserType | null;
+}
+
+const SalesByTimeSlotComponent: React.FC<SalesByTimeSlotComponentProps> = ({ user }) => {
     const { data: ticketData, loading } = useFetchData();
     const [selectedOption, setSelectedOption] = useState("");
     const [eventTimeSalesData, setEventTimeSalesData] = useState<any[]>([]);
@@ -19,16 +27,22 @@ const SalesByTimeSlotComponent: React.FC = () => {
 
     return (
         <>
-            <Combobox onSelect={setSelectedOption} />
-            <div className="flex flex-wrap">
-                {eventTimeSalesData.map((eventData) => (
-                    <SalesByTimeSlotDisplay
-                        key={eventData.eventId}
-                        eventId={eventData.eventId}
-                        data={eventData.timeSalesCounts}
-                    />
-                ))}
-            </div>
+            { user ? (
+                <>
+                    <Combobox onSelect={setSelectedOption} />
+                    <div className="flex flex-wrap">
+                        {eventTimeSalesData.map((eventData) => (
+                            <SalesByTimeSlotDisplay
+                                key={eventData.eventId}
+                                eventId={eventData.eventId}
+                                data={eventData.timeSalesCounts}
+                            />
+                        ))}
+                    </div>
+                </>
+            ) : (
+                <Skeleton className="h-64 w-full" />
+            )}
         </>
     );
 };

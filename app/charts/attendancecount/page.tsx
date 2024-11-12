@@ -1,15 +1,14 @@
-"use client"
-
-import React from "react";
+import { getAuthSession } from "@/components/lib/nextauth";
 import AttendanceCountPieComponent from "@/components/charts/AllAttendanceCountPieCharts";
 
-const Page: React.FC = () => {
+const AttendanceCountPage = async () => {
+    const user = await getAuthSession();
     return (
         <div>
             <h1>来場回数割合グラフ</h1>
-            <AttendanceCountPieComponent />
+            <AttendanceCountPieComponent user={user} />
         </div>
     )
 }
 
-export default Page
+export default AttendanceCountPage
