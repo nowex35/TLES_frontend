@@ -1,10 +1,18 @@
+"use client"
+
 import React, {useEffect} from "react";
 import DaySalesDisplay from "./DaySalesChart";
 import useFetchData from "./utils/useFetchData";
 import { aggregateSalesQuantity } from "./utils/dataAggregator";
 import { Combobox } from "@/components/combobox/Combobox";
+import { UserType } from "@/components/lib/nextauth";
+import { Skeleton } from "@/components/ui/skeleton";
 
-const DaySalesComponent: React.FC = () => {
+interface DaySalesComponentProps {
+    user: UserType | null;
+}
+
+const DaySalesComponent: React.FC<DaySalesComponentProps> = ({ user }) => {
     const { data: ticketData, loading } = useFetchData();
     const [selectedOption, setSelectedOption] = React.useState("");
     const [eventDaySalesData, setEventDaySalesData] = React.useState([]);
@@ -47,12 +55,18 @@ const DaySalesComponent: React.FC = () => {
 
     return (
         <>
-            <Combobox onSelect={setSelectedOption} />
-            <div className="flex flex1">
-                {eventDaySalesData.map((eventData, index) => (
-                    <DaySalesDisplay key={eventData.eventId} eventData={eventData} />
-                ))}
-            </div>
+            { user ? (
+                <>
+                    <Combobox onSelect={setSelectedOption} />
+                    <div className="flex flex1">
+                        {eventDaySalesData.map((eventData, index) => (
+                            <DaySalesDisplay key={eventData.eventId} eventData={eventData} />
+                        ))}
+                    </div>
+                </>
+            ) : (
+                <Skeleton className="h-64 w-full" />
+            )}
         </>
     );
 };

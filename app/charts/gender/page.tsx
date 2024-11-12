@@ -1,15 +1,14 @@
-"use client"
-
-import React from "react";
+import { getAuthSession } from "@/components/lib/nextauth";
 import GenderPieComponent from "@/components/charts/AllGenderPieCharts";
 
-const Page: React.FC = () => {
+const GenderPiePage = async () => {
+    const user = await getAuthSession();
     return (
         <div>
             <h1>性別割合グラフ</h1>
-            <GenderPieComponent />
+            <GenderPieComponent user={ user } />
         </div>
     )
 }
 
-export default Page
+export default GenderPiePage

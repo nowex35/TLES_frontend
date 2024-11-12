@@ -7,7 +7,7 @@ interface HomeProps {
     user: UserType | null
 }
 
-const Home = ({ user }) => {
+const Home: React.FC<HomeProps> = ({ user }) => {
     return (
         <>
             {user ? (

@@ -1,15 +1,14 @@
-"use client"
-
-import React from "react";
+import { getAuthSession } from "@/components/lib/nextauth";
 import DepartmentPieComponent from "@/components/charts/AllDepartmentPieCharts";
 
-const Page: React.FC = () => {
+const DepartmentPage = async () => {
+    const user = await getAuthSession();
     return (
         <div>
             <h1>所属割合グラフ</h1>
-            <DepartmentPieComponent />
+            <DepartmentPieComponent user={ user } />
         </div>
     )
 }
 
-export default Page
+export default DepartmentPage

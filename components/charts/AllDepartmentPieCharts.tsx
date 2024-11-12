@@ -1,8 +1,16 @@
+"use client"
+
 import React from "react"
 import DepartmentDisplay from "./DepartmentPieChart"
 import AllLegends from "./AllLegends"
 import useFetchData from "./utils/useFetchData"
 import { aggregateData } from "./utils/dataAggregator"
+import { UserType } from "@/components/lib/nextauth";
+import { Skeleton } from "@/components/ui/skeleton";
+
+interface DepartmentPieComponentProps {
+    user: UserType | null
+}
 
 interface CountAry {
     [age_group: string]: number
@@ -13,7 +21,7 @@ interface EventData {
     ageCounts: CountAry
 }
 
-const DepartmentPieComponent: React.FC = () => {
+const DepartmentPieComponent: React.FC<DepartmentPieComponentProps> = ({user}) => {
     const { data: ticketData, loading} = useFetchData()
 
     if (loading) {
@@ -26,14 +34,19 @@ const DepartmentPieComponent: React.FC = () => {
 
     return (
         <>
-            <AllLegends type="age" />
-            <div className="flex flex1">
-            {eventDepartmentData.map((eventData, index) => (
-                <DepartmentDisplay key={eventData.eventId} eventData={eventData} />
-            ))}
-            </div>
+            { user ? (
+                <>
+                    <AllLegends type="age" />
+                    <div className="flex flex1">
+                    {eventDepartmentData.map((eventData, index) => (
+                        <DepartmentDisplay key={eventData.eventId} eventData={eventData} />
+                    ))}
+                    </div>
+                </>
+            ) : (
+                <Skeleton className="h-64 w-full" />
+            )}
         </>
-        
     )
 }
 

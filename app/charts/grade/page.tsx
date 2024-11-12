@@ -1,15 +1,14 @@
-"use client"
-
-import React from "react";
+import { getAuthSession } from "@/components/lib/nextauth";
 import GradePieComponent from "@/components/charts/AllGradePieCharts";
 
-const Page: React.FC = () => {
+const GradePiePage = async () => {
+    const user = await getAuthSession();
     return (
         <div>
             <h1>学年割合グラフ</h1>
-            <GradePieComponent />
+            <GradePieComponent user={user} />
         </div>
     )
 }
 
-export default Page
+export default GradePiePage
