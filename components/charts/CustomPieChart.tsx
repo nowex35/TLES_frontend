@@ -35,6 +35,7 @@ const CustomPieChart: React.FC<CustomPieChartProps> = ({ data, colors }) => {
                     dataKey="value"
                     startAngle={90}
                     endAngle={-270}
+                    animationDuration={1000}
                 >
                     {data.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={colors[entry.name] || "#8884d8"} />

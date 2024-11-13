@@ -3,13 +3,12 @@
 import React from "react"
 import GenderDisplay from "./GenderPieChart"
 import AllLegends from "./AllLegends"
-import useFetchData from "./utils/useFetchData"
-import { aggregateData } from "./utils/dataAggregator"
 import { UserType } from "@/components/lib/nextauth";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface GenderPieComponentProps {
     user: UserType | null
+    eventGenderData: EventData[]
 }
 
 interface CountAry {
@@ -21,15 +20,10 @@ interface EventData {
     genderCounts: CountAry
 }
 
-const GenderPieComponent: React.FC<GenderPieComponentProps> = ({ user }) => {
-    const { data: ticketData, loading} = useFetchData()
-
-    if (loading) {
-        return <p>ロード中...</p>;
-    }
-
-    const eventGenderData = aggregateData(ticketData, 'genderCounts','gender')
-
+const GenderPieComponent: React.FC<GenderPieComponentProps> = ({
+    user,
+    eventGenderData,
+}) => {
     return (
         <>
             { user ? (

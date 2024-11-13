@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import SalesByTimeSlotDisplay from "./SalesByTimeSlotChart";
-import useFetchData from "./utils/useFetchData";
 import { aggregateSalesQuantityByTimeSlot } from "./utils/dataAggregator";
 import { Combobox } from "@/components/combobox/Combobox";
 import { UserType } from "@/components/lib/nextauth";
@@ -10,20 +9,23 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 interface SalesByTimeSlotComponentProps {
     user: UserType | null;
+    ticketData: any;
 }
 
-const SalesByTimeSlotComponent: React.FC<SalesByTimeSlotComponentProps> = ({ user }) => {
-    const { data: ticketData, loading } = useFetchData();
+const SalesByTimeSlotComponent: React.FC<SalesByTimeSlotComponentProps> = ({
+    user,
+    ticketData
+}) => {
     const [selectedOption, setSelectedOption] = useState("");
     const [eventTimeSalesData, setEventTimeSalesData] = useState<any[]>([]);
 
     useEffect(() => {
-        if (!loading && ticketData.length > 0) {
+        if ( ticketData.length > 0) {
             // 15分ごとの売上データを取得
             const aggregatedData = aggregateSalesQuantityByTimeSlot(ticketData, selectedOption);
             setEventTimeSalesData(aggregatedData);
         }
-    }, [ticketData, selectedOption, loading]);
+    }, [ticketData, selectedOption]);
 
     return (
         <>

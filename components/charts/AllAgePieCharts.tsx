@@ -3,13 +3,12 @@
 import React from "react"
 import AgeDisplay from "./AgePieChart"
 import AllLegends from "./AllLegends"
-import useFetchData from "./utils/useFetchData"
-import { aggregateData } from "./utils/dataAggregator"
 import  { UserType } from "@/components/lib/nextauth"
 import { Skeleton } from "@/components/ui/skeleton"
 
 interface AgePieComponentProps {
     user: UserType | null;
+    eventAgeData: EventData[];
 }
 
 interface CountAry {
@@ -21,21 +20,17 @@ interface EventData {
     ageCounts: CountAry
 }
 
-const AgePieComponent: React.FC<AgePieComponentProps> = ({user}) => {
-    const { data: ticketData, loading} = useFetchData()
-
-    if (loading) {
-        return <p>ロード中...</p>;
-    }
-    const eventDepartmentData = aggregateData(ticketData, 'ageCounts', 'age_group')
-
+const AgePieComponent: React.FC<AgePieComponentProps> = ({
+    user,
+    eventAgeData,
+}) => {
     return (
         <>
             {user ? (
                 <>
                     <AllLegends type="age" />
                     <div className="flex flex1">
-                    {eventDepartmentData.map((eventData, index) => (
+                    {eventAgeData.map((eventData, index) => (
                         <AgeDisplay key={eventData.eventId} eventData={eventData} />
                     ))}
                     </div>
