@@ -56,7 +56,7 @@ interface ticketDataProps {
 export const getTicketData = async () => {
     const options = {
         method: "GET",
-        cache: "no-store" as RequestCache,
+        cache: "force-cache" as RequestCache,
     }
 
     //チケットデータを取得

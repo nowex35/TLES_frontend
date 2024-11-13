@@ -2,7 +2,6 @@
 
 import React, {useEffect} from "react";
 import DaySalesDisplay from "./DaySalesChart";
-import useFetchData from "./utils/useFetchData";
 import { aggregateSalesQuantity } from "./utils/dataAggregator";
 import { Combobox } from "@/components/combobox/Combobox";
 import { UserType } from "@/components/lib/nextauth";
@@ -10,19 +9,22 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 interface DaySalesComponentProps {
     user: UserType | null;
+    ticketData: any;
 }
 
-const DaySalesComponent: React.FC<DaySalesComponentProps> = ({ user }) => {
-    const { data: ticketData, loading } = useFetchData();
+const DaySalesComponent: React.FC<DaySalesComponentProps> = ({
+    user,
+    ticketData,
+    }) => {
     const [selectedOption, setSelectedOption] = React.useState("");
     const [eventDaySalesData, setEventDaySalesData] = React.useState([]);
 
     useEffect(() => {
-        if (!loading) {
+        if (ticketData.length > 0) {
             const aggregatedData = aggregateSalesQuantity(ticketData, selectedOption);
             setEventDaySalesData(aggregatedData);
         }
-    }, [ticketData, selectedOption, loading]);
+    }, [ticketData, selectedOption]);
 
     // 日付ごとに並び替え
     eventDaySalesData.forEach(eventData => {

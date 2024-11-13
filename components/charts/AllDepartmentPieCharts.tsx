@@ -3,13 +3,12 @@
 import React from "react"
 import DepartmentDisplay from "./DepartmentPieChart"
 import AllLegends from "./AllLegends"
-import useFetchData from "./utils/useFetchData"
-import { aggregateData } from "./utils/dataAggregator"
 import { UserType } from "@/components/lib/nextauth";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface DepartmentPieComponentProps {
     user: UserType | null
+    eventDepartmentData: EventData[]
 }
 
 interface CountAry {
@@ -21,17 +20,10 @@ interface EventData {
     ageCounts: CountAry
 }
 
-const DepartmentPieComponent: React.FC<DepartmentPieComponentProps> = ({user}) => {
-    const { data: ticketData, loading} = useFetchData()
-
-    if (loading) {
-        return <p>ロード中...</p>;
-    }
-
-    const filteredTicketData = ticketData.filter(ticket => ticket.department !== "筑波大生でない");
-
-    const eventDepartmentData = aggregateData(filteredTicketData, 'departmentCounts', 'department')
-
+const DepartmentPieComponent: React.FC<DepartmentPieComponentProps> = ({
+    user,
+    eventDepartmentData,
+}) => {
     return (
         <>
             { user ? (

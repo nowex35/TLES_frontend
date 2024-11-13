@@ -3,13 +3,12 @@
 import React from "react"
 import SpViewingFreqDisplay from "./SpViewingPieChart"
 import AllLegends from "./AllLegends"
-import useFetchData from "./utils/useFetchData"
-import { aggregateData } from "./utils/dataAggregator"
 import { UserType } from "@/components/lib/nextauth";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface SpViewingFreqComponentProps {
     user: UserType | null
+    eventSpViewingData: EventData[]
 }
 
 
@@ -22,14 +21,10 @@ interface EventData {
     SpViewingFreqCounts: CountAry
 }
 
-const SpViewingFreqPieComponent: React.FC<SpViewingFreqComponentProps> = ({ user }) => {
-    const { data: ticketData, loading} = useFetchData()
-
-    if (loading) {
-        return <p>ロード中...</p>;
-    }
-
-    const eventSpViewingData = aggregateData(ticketData, 'SpViewingFreqCounts', 'special_viewing_freq')
+const SpViewingFreqPieComponent: React.FC<SpViewingFreqComponentProps> = ({
+    user,
+    eventSpViewingData
+}) => {
 
     return (
         <>

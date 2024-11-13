@@ -3,13 +3,12 @@
 import React from "react"
 import ViewingFreqDisplay from "./ViewingPieChart"
 import AllLegends from "./AllLegends"
-import useFetchData from "./utils/useFetchData"
-import { aggregateData } from "./utils/dataAggregator"
 import { UserType } from "@/components/lib/nextauth";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface ViewingFreqComponentProps {
     user: UserType | null
+    eventViewingFreqData: EventData[]
 }
 
 interface CountAry {
@@ -21,15 +20,10 @@ interface EventData {
     ViewingFreqCounts: CountAry
 }
 
-const ViewingFreqPieComponent: React.FC<ViewingFreqComponentProps> = ({ user }) => {
-    const { data: ticketData, loading} = useFetchData()
-
-    if (loading) {
-        return <p>ロード中...</p>;
-    }
-
-    const eventViewingFreqData = aggregateData(ticketData, 'ViewingFreqCounts', 'viewing_freq')
-
+const ViewingFreqPieComponent: React.FC<ViewingFreqComponentProps> = ({
+    user,
+    eventViewingFreqData
+}) => {
     return (
         <>
             { user ? (

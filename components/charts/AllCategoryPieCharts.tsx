@@ -3,13 +3,12 @@
 import React from "react"
 import CategoryDisplay from "./CategoryPieChart"
 import AllLegends from "./AllLegends"
-import useFetchData from "./utils/useFetchData"
-import { aggregateData } from "./utils/dataAggregator"
 import { UserType } from "@/components/lib/nextauth";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface CategoryPieComponentProps {
     user: UserType | null
+    eventCategoryData: EventData[]
 }
 
 interface CountAry {
@@ -21,15 +20,10 @@ interface EventData {
     categoryCounts: CountAry
 }
 
-const CategoryPieComponent: React.FC<CategoryPieComponentProps> = ({ user }) => {
-    const { data: ticketData, loading} = useFetchData()
-
-    if (loading) {
-        return <p>ロード中...</p>;
-    }
-
-    const eventCategoryData = aggregateData(ticketData, 'categoryCounts', 'category')
-
+const CategoryPieComponent: React.FC<CategoryPieComponentProps> = ({
+    user,
+    eventCategoryData,
+}) => {
     return (
         <>
             { user ? (
