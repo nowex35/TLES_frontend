@@ -71,7 +71,7 @@ const AllLegends: React.FC<AllLegendsProps> = ({ type }) => {
     }
 
     return (
-        <div style={{ width: "100%", height: 60 }}>
+        <div style={{width:"100%", height:90}}>
             <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                     <Legend

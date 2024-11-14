@@ -1,6 +1,7 @@
 import React from "react";
 import { Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, ComposedChart, ResponsiveContainer, Label } from "recharts";
 import dayjs from "dayjs";
+import { EVENT_INFO } from "./utils/events"
 
 interface DaySalesCount {
     [purchase_datetime: string]: {
@@ -25,9 +26,13 @@ const DaySalesDisplay: React.FC<EventProps> = ({ eventData }) => {
         fillteredValue: counts.filteredData,
         filteredValuePercentage: (counts.filteredData / counts.data) * 100 || 0,
     }));
+    const eventId = parseInt(eventData.eventId, 10); // eventId を数値に変換
+    const eventName = EVENT_INFO[eventId]; // 数値型のキーでアクセス
+
 
     return (
         <>
+            <h3>{eventName ? eventName : `イベントID: ${eventData.eventId}`}</h3>
             <ResponsiveContainer width="100%" height={400}>
                 <ComposedChart data={data} margin={{ bottom: 70 }}>
                     <CartesianGrid strokeDasharray="3 3" />
@@ -72,11 +77,11 @@ const DaySalesDisplay: React.FC<EventProps> = ({ eventData }) => {
                     <Bar dataKey="value" fill="red" />
                     <Bar dataKey="fillteredValue" fill="blue" opacity={0.7} />
                     <Line type="monotone" dataKey="filteredValuePercentage" stroke="#ff7300" yAxisId="right" />
-                    <Label value="{{eventData.eventId}}" offset={0} position="insideTop" fontSize={20} fontWeight="bold" />
                 </ComposedChart>
             </ResponsiveContainer>
         </>
     );
 };
+
 
 export default DaySalesDisplay;
