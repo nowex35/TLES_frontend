@@ -12,7 +12,7 @@ interface CategoryPieComponentProps {
 }
 
 interface CountAry {
-    [category: string]: number
+    [grade: string]: number
 }
 
 interface EventData {
