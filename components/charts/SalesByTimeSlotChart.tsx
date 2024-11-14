@@ -12,6 +12,8 @@ import {
   Legend,
   ComposedChart,
 } from 'recharts';
+import { EVENT_INFO } from "./utils/events"
+
 
 interface TimeSlotData {
   timeSlot: string; // e.g., "13:15"
@@ -26,9 +28,12 @@ interface SalesByTimeSlotChartProps {
 }
 
 const SalesByTimeSlotChart: React.FC<SalesByTimeSlotChartProps> = ({ eventId, data }) => {
+  const event_id = parseInt(eventId,10)
+  const eventName = EVENT_INFO[event_id]; // 数値型のキーでアクセス
+
   return (
     <div style={{ width: '100%', height: 400 }}>
-      <h3>イベントID: {eventId}</h3>
+      <h3>{eventName ? eventName : `イベントID: ${event_id}`}</h3>
       <ResponsiveContainer>
         <ComposedChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
           <CartesianGrid strokeDasharray="3 3" />

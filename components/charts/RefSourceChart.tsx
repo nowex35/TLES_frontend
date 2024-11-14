@@ -1,5 +1,6 @@
 import React from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { EVENT_INFO } from "./utils/events"
 
 interface RefCount {
     [referral_source: string]: number;
@@ -15,6 +16,9 @@ interface EventProps {
 }
 
 const RefSourceDisplay: React.FC<EventProps> = ({ eventData }) => {
+    const eventId = parseInt(eventData.eventId, 10); // eventId を数値に変換
+    const eventName = EVENT_INFO[eventId]; // 数値型のキーでアクセス
+
     // refCounts の合計を計算
     const total = Object.values(eventData.refCounts).reduce((sum, value) => sum + value, 0);
 
@@ -29,6 +33,7 @@ const RefSourceDisplay: React.FC<EventProps> = ({ eventData }) => {
 
     return (
         <div style={{ width: "100%", height: 400 }}>
+            <h3>{eventName ? eventName : `イベントID: ${eventData.eventId}`}</h3>
             <ResponsiveContainer>
                 <BarChart
                     data={data}
@@ -55,16 +60,6 @@ const RefSourceDisplay: React.FC<EventProps> = ({ eventData }) => {
                         }}
                     />
                     <Bar dataKey="percentage" fill="#8884d8" />
-                    <text
-                        x={200}
-                        y={20}
-                        textAnchor="middle"
-                        dominantBaseline="middle"
-                        fontSize={20}
-                        fontWeight="bold"
-                    >
-                        イベントID: {eventData.eventId}
-                    </text>
                 </BarChart>
             </ResponsiveContainer>
         </div>
