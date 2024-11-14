@@ -13,7 +13,7 @@ export const GRADE_COLORS: Record<string, string> = {
     "3年": "#ff7f0e",
     "4年": "#9467bd",
     "Master": "#2ca02c",
-    "Ph.D": "#d62728",
+    "Ph.D": "#8c564b",
     "他大生": "#e377c2",
     "筑波大生でない": "#7f7f7f"
 };

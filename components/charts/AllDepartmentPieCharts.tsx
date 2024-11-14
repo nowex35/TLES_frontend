@@ -12,12 +12,12 @@ interface DepartmentPieComponentProps {
 }
 
 interface CountAry {
-    [age_group: string]: number
+    [department: string]: number
 }
 
 interface EventData {
     eventId: number
-    ageCounts: CountAry
+    departmentCounts: CountAry
 }
 
 const DepartmentPieComponent: React.FC<DepartmentPieComponentProps> = ({
@@ -28,7 +28,7 @@ const DepartmentPieComponent: React.FC<DepartmentPieComponentProps> = ({
         <>
             { user ? (
                 <>
-                    <AllLegends type="age" />
+                    <AllLegends type="department" />
                     <div className="flex flex1">
                     {eventDepartmentData.map((eventData, index) => (
                         <DepartmentDisplay key={eventData.eventId} eventData={eventData} />

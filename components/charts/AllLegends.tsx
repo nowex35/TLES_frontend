@@ -1,6 +1,6 @@
 import React from "react";
 import { PieChart, Legend, ResponsiveContainer } from "recharts";
-import { GENDER_COLORS, GRADE_COLORS, CATEGORY_COLORS, PLAY_FREQ_COLORS, VIEWING_FREQ_COLORS, AGE_COLORS, ATTENDANCE_COUNT_COLORS } from "./utils/colors";
+import { GENDER_COLORS, GRADE_COLORS, CATEGORY_COLORS, PLAY_FREQ_COLORS, VIEWING_FREQ_COLORS, AGE_COLORS, ATTENDANCE_COUNT_COLORS, DEPARTMENT_COLORS } from "./utils/colors";
 
 interface AllLegendsProps {
     type: "gender" | "grade" | "category" | "playFreq" | "viewingFreq" | "age" | "department" | "attendance";
@@ -57,6 +57,13 @@ const AllLegends: React.FC<AllLegendsProps> = ({ type }) => {
                 value: name,
                 type: "square",
                 color: ATTENDANCE_COUNT_COLORS[name]
+            }));
+            break;
+        case "department":
+            legendData = Object.keys(DEPARTMENT_COLORS).map(name => ({
+                value: name,
+                type: "square",
+                color: DEPARTMENT_COLORS[name]
             }));
             break;
         default:

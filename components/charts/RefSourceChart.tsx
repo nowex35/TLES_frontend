@@ -1,5 +1,5 @@
 import React from "react";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Text } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 interface RefCount {
     [referral_source: string]: number;
@@ -48,7 +48,12 @@ const RefSourceDisplay: React.FC<EventProps> = ({ eventData }) => {
                         interval={0}
                         tick={{ fontSize: 12 }}
                     />
-                    <Tooltip formatter={(value) => `${value}%`} />
+                    <Tooltip
+                        formatter={(value, name, props) => {
+                            const { payload } = props;
+                            return [`${payload.count} (${payload.percentage}%)`, name];
+                        }}
+                    />
                     <Bar dataKey="percentage" fill="#8884d8" />
                     <text
                         x={200}

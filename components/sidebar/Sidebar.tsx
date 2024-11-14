@@ -86,21 +86,15 @@ const Chartitem = {
       title: "referral_source Chart",
       url: "../charts/refsource/",
     },
+    {
+      title: "All Chart",
+      url: "../charts/allchart/",
+    },
   ]
 }
 
 
 const items = [
-    {
-        title: "Calendar",
-        url: "#",
-        icon: Calendar,
-      },
-      {
-        title: "Search",
-        url: "#",
-        icon: Search,
-      },
       {
         title: "Settings",
         url: "../settings/profile/",

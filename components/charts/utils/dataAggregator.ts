@@ -119,3 +119,24 @@ const generateTimeSlots = () => {
     }
     return slots;
 };
+
+export const aggregateDataWithoutEventId = (ticketData: any, key: string, countKey: string) => {
+    // ticketDataが配列でない場合、Object.valuesで配列に変換
+    const ticketArray = Array.isArray(ticketData) ? ticketData : Object.values(ticketData);
+
+    const aggregatedData = ticketArray.reduce((acc, ticket) => {
+        const countValue = ticket[countKey];
+
+        // countValue が undefined または null の場合は処理をスキップ
+        if (countValue === undefined || countValue === null || countValue === '無回答') {
+            return acc;
+        }
+
+        acc[key] = acc[key] || {};
+        acc[key][countValue] = (acc[key][countValue] || 0) + 1;
+
+        return acc;
+    }, {} as { [key: string]: { [value: string]: number } });
+
+    return aggregatedData;
+};
