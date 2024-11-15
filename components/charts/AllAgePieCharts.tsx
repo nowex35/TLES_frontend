@@ -3,26 +3,12 @@
 import React from "react"
 import AgeDisplay from "./AgePieChart"
 import AllLegends from "./AllLegends"
-import  { UserType } from "@/components/lib/nextauth"
 import { Skeleton } from "@/components/ui/skeleton"
+import { chartComponentProps } from "@/types"
 
-interface AgePieComponentProps {
-    user: UserType | null;
-    eventAgeData: EventData[];
-}
-
-interface CountAry {
-    [age_group: string]: number
-}
-
-interface EventData {
-    eventId: number
-    ageCounts: CountAry
-}
-
-const AgePieComponent: React.FC<AgePieComponentProps> = ({
+const AgePieComponent: React.FC<chartComponentProps> = ({
     user,
-    eventAgeData,
+    eventData,
 }) => {
     return (
         <>
@@ -30,7 +16,7 @@ const AgePieComponent: React.FC<AgePieComponentProps> = ({
                 <>
                     <AllLegends type="age" />
                     <div className="flex flex1">
-                    {eventAgeData.map((eventData, index) => (
+                    {eventData.map((eventData, index) => (
                         <AgeDisplay key={eventData.eventId} eventData={eventData} />
                     ))}
                     </div>

@@ -3,25 +3,12 @@
 import React from "react"
 import AttendanceCountDisplay from "./AttendanceCountPieChart"
 import AllLegends from "./AllLegends"
-import { UserType } from "@/components/lib/nextauth"
 import { Skeleton } from "@/components/ui/skeleton"
+import { chartComponentProps } from "@/types"
 
-interface AttendanceCountPieComponentProps {
-    user: UserType | null
-    eventAttendanceCountData: EventData[]
-}
-interface CountAry {
-    [attendance_count: string]: number
-}
-
-interface EventData {
-    eventId: number
-    attendanceCountCounts: CountAry
-}
-
-const AttendanceCountPieComponent: React.FC<AttendanceCountPieComponentProps> = ({
+const AttendanceCountPieComponent: React.FC<chartComponentProps> = ({
     user,
-    eventAttendanceCountData,
+    eventData,
 }) => {
     return (
         <>
@@ -29,7 +16,7 @@ const AttendanceCountPieComponent: React.FC<AttendanceCountPieComponentProps> = 
                 <>
                     <AllLegends type="attendance" />
                     <div className="flex flex1">
-                    {eventAttendanceCountData.map((eventData, index) => (
+                    {eventData.map((eventData, index) => (
                         <AttendanceCountDisplay key={eventData.eventId} eventData={eventData} />
                     ))}
                     </div>

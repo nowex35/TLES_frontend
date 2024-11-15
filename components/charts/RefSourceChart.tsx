@@ -1,29 +1,17 @@
 import React from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { EVENT_INFO } from "./utils/events"
+import { eventProps } from "@/types"
 
-interface RefCount {
-    [referral_source: string]: number;
-}
 
-interface EventData {
-    eventId: string;
-    refCounts: RefCount;
-}
-
-interface EventProps {
-    eventData: EventData;
-}
-
-const RefSourceDisplay: React.FC<EventProps> = ({ eventData }) => {
-    const eventId = parseInt(eventData.eventId, 10); // eventId を数値に変換
-    const eventName = EVENT_INFO[eventId]; // 数値型のキーでアクセス
+const RefSourceDisplay: React.FC<eventProps> = ({ eventData }) => {
+    const eventName = EVENT_INFO[eventData.eventId];
 
     // refCounts の合計を計算
-    const total = Object.values(eventData.refCounts).reduce((sum, value) => sum + value, 0);
+    const total = Object.values(eventData.countsAry).reduce((sum, value) => sum + value, 0);
 
     // 各リファラルソースの割合を計算し、多い順にソート
-    const data = Object.entries(eventData.refCounts)
+    const data = Object.entries(eventData.countsAry)
         .map(([name, value]) => ({
             name,
             count: value,

@@ -3,26 +3,12 @@
 import React from "react"
 import PlaySportsDisplay from "./PlayFreqPieChart"
 import AllLegends from "./AllLegends"
-import { UserType } from "@/components/lib/nextauth";
 import { Skeleton } from "@/components/ui/skeleton";
+import { chartComponentProps } from "@/types"
 
-interface PlaySportsComponentProps {
-    user: UserType | null
-    eventPlayFreqData: EventData[]
-}
-
-interface CountAry {
-    [play_freq: string]: number
-}
-
-interface EventData {
-    eventId: number
-    PlayFreqCounts: CountAry
-}
-
-const PlaySportsPieComponent: React.FC<PlaySportsComponentProps> = ({
+const PlaySportsPieComponent: React.FC<chartComponentProps> = ({
     user,
-    eventPlayFreqData,
+    eventData,
 }) => {
     return (
         <>
@@ -30,7 +16,7 @@ const PlaySportsPieComponent: React.FC<PlaySportsComponentProps> = ({
                 <>
                     <AllLegends type="playFreq" />
                     <div className="flex flex1">
-                    {eventPlayFreqData.map((eventData, index) => (
+                    {eventData.map((eventData, index) => (
                         <PlaySportsDisplay key={eventData.eventId} eventData={eventData} />
                     ))}
                     </div>

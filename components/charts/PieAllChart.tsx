@@ -40,7 +40,7 @@ const AllChartComponent: React.FC<PieChartComponentProps> = ({ data, type, color
     return (
         <div>
             <AllLegends type={type} />
-            <PieChart width={400} height={400}>
+            <PieChart width={400} height={400} key={type}>
                 <Pie
                     data={data}
                     cx="50%"

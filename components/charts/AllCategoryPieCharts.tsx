@@ -5,24 +5,11 @@ import CategoryDisplay from "./CategoryPieChart"
 import AllLegends from "./AllLegends"
 import { UserType } from "@/components/lib/nextauth";
 import { Skeleton } from "@/components/ui/skeleton";
+import { chartComponentProps } from "@/types"
 
-interface CategoryPieComponentProps {
-    user: UserType | null
-    eventCategoryData: EventData[]
-}
-
-interface CountAry {
-    [category: string]: number
-}
-
-interface EventData {
-    eventId: number
-    categoryCounts: CountAry
-}
-
-const CategoryPieComponent: React.FC<CategoryPieComponentProps> = ({
+const CategoryPieComponent: React.FC<chartComponentProps> = ({
     user,
-    eventCategoryData,
+    eventData,
 }) => {
     return (
         <>
@@ -30,7 +17,7 @@ const CategoryPieComponent: React.FC<CategoryPieComponentProps> = ({
                 <>
                     <AllLegends type="category" />
                     <div className="flex flex1">
-                        {eventCategoryData.map((eventData, index) => (
+                        {eventData.map((eventData, index) => (
                             <CategoryDisplay key={eventData.eventId} eventData={eventData} />
                         ))}
                     </div>

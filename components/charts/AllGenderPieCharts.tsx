@@ -3,26 +3,12 @@
 import React from "react"
 import GenderDisplay from "./GenderPieChart"
 import AllLegends from "./AllLegends"
-import { UserType } from "@/components/lib/nextauth";
 import { Skeleton } from "@/components/ui/skeleton";
+import { chartComponentProps } from "@/types"
 
-interface GenderPieComponentProps {
-    user: UserType | null
-    eventGenderData: EventData[]
-}
-
-interface CountAry {
-    [gender: string]: number
-}
-
-interface EventData {
-    eventId: number
-    genderCounts: CountAry
-}
-
-const GenderPieComponent: React.FC<GenderPieComponentProps> = ({
+const GenderPieComponent: React.FC<chartComponentProps> = ({
     user,
-    eventGenderData,
+    eventData,
 }) => {
     return (
         <>
@@ -30,7 +16,7 @@ const GenderPieComponent: React.FC<GenderPieComponentProps> = ({
                 <>
                     <AllLegends type="gender" />
                     <div className="flex flex1">
-                    {eventGenderData.map((eventData, index) => (
+                    {eventData.map((eventData, index) => (
                         <GenderDisplay key={eventData.eventId} eventData={eventData} />
                     ))}
                     </div>

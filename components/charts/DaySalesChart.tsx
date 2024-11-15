@@ -2,39 +2,28 @@ import React from "react";
 import { Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, ComposedChart, ResponsiveContainer, Label } from "recharts";
 import dayjs from "dayjs";
 import { EVENT_INFO } from "./utils/events"
+import { daySalesProps } from "@/types";
 
-interface DaySalesCount {
-    [purchase_datetime: string]: {
-        data: number;
-        filteredData: number;
-    };
-}
-
-interface EventData {
-    eventId: string;
-    daysalesCounts: DaySalesCount;
-}
-
-interface EventProps {
-    eventData: EventData;
-}
-
-const DaySalesDisplay: React.FC<EventProps> = ({ eventData }) => {
+const DaySalesDisplay: React.FC<daySalesProps> = ({ eventData }) => {
     const data = Object.entries(eventData.daysalesCounts).map(([date, counts]) => ({
         name: dayjs(date).format("YYYY-MM-DD"),
         value: counts.data,
         fillteredValue: counts.filteredData,
         filteredValuePercentage: (counts.filteredData / counts.data) * 100 || 0,
     }));
-    const eventId = parseInt(eventData.eventId, 10); // eventId を数値に変換
-    const eventName = EVENT_INFO[eventId]; // 数値型のキーでアクセス
+    const eventName = EVENT_INFO[eventData.eventId];
 
 
     return (
-        <>
+        <div className="w-full">
             <h3>{eventName ? eventName : `イベントID: ${eventData.eventId}`}</h3>
             <ResponsiveContainer width="100%" height={400}>
                 <ComposedChart data={data} margin={{ bottom: 70 }}>
+                    <Label
+                            value={eventName ? eventName : `イベントID: ${eventData.eventId}`}
+                            position="top"  // ラベルの位置を上に設定
+                            fontSize={16} // フォントサイズを調整
+                        />
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis
                         dataKey="name"
@@ -79,7 +68,7 @@ const DaySalesDisplay: React.FC<EventProps> = ({ eventData }) => {
                     <Line type="monotone" dataKey="filteredValuePercentage" stroke="#ff7300" yAxisId="right" />
                 </ComposedChart>
             </ResponsiveContainer>
-        </>
+        </div>
     );
 };
 
