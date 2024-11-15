@@ -6,6 +6,7 @@ import { aggregateSalesQuantity } from "./utils/dataAggregator";
 import { Combobox } from "@/components/combobox/Combobox";
 import { UserType } from "@/components/lib/nextauth";
 import { Skeleton } from "@/components/ui/skeleton";
+import { daySalesAggregatedData } from "@/types";
 
 interface DaySalesComponentProps {
     user: UserType | null;
@@ -17,7 +18,7 @@ const DaySalesComponent: React.FC<DaySalesComponentProps> = ({
     ticketData,
     }) => {
     const [selectedOption, setSelectedOption] = React.useState("");
-    const [eventDaySalesData, setEventDaySalesData] = React.useState([]);
+    const [eventDaySalesData, setEventDaySalesData] = React.useState<daySalesAggregatedData[]>([]);
 
     useEffect(() => {
         if (ticketData.length > 0) {
@@ -60,7 +61,7 @@ const DaySalesComponent: React.FC<DaySalesComponentProps> = ({
             { user ? (
                 <>
                     <Combobox onSelect={setSelectedOption} />
-                    <div className="flex flex1">
+                    <div className="flex flex-row flex-wrap">
                         {eventDaySalesData.map((eventData, index) => (
                             <DaySalesDisplay key={eventData.eventId} eventData={eventData} />
                         ))}

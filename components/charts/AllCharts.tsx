@@ -1,62 +1,18 @@
-"use server"
-import React from "react";
+import dynamic from 'next/dynamic';
 import { Skeleton } from "@/components/ui/skeleton";
-import PieChartComponent from "./PieAllChart";
-import { UserType } from "@/components/lib/nextauth";
 import { AGE_COLORS, CATEGORY_COLORS, DEPARTMENT_COLORS, GENDER_COLORS, GRADE_COLORS } from "./utils/colors";
+import { UserType } from "@/components/lib/nextauth";
+import { eventData } from "@/types";
+
+const PieChartComponent = dynamic(() => import('./PieAllChart'), { ssr: false });
 
 interface AllChartComponentProps {
     user: UserType | null;
-    eventAgeData: eventAgeData[];
-    eventCategoryData: eventCategoryData[];
-    eventDepartmentData: eventDepartmentData[];
-    eventGenderData: eventGenderData[];
-    eventGradeData: eventGradeData[];
-}
-
-interface countAgeAry {
-    [age_group: string]: number;
-}
-
-interface eventAgeData {
-    eventId: number;
-    ageCounts: countAgeAry;
-}
-
-interface countCategoryAry {
-    [category: string]: number;
-}
-
-interface eventCategoryData {
-    eventId: number;
-    categoryCounts: countCategoryAry;
-}
-
-interface countDepartmentAry {
-    [department: string]: number;
-}
-
-interface eventDepartmentData {
-    eventId: number;
-    departmentCounts: countDepartmentAry;
-}
-
-interface countGenderAry {
-    [gender: string]: number;
-}
-
-interface eventGenderData {
-    eventId: number;
-    genderCounts: countGenderAry;
-}
-
-interface countGradeAry {
-    [grade: string]: number;
-}
-
-interface eventGradeData {
-    eventId: number;
-    gradeCounts: countGradeAry;
+    eventAgeData: eventData[];
+    eventCategoryData: eventData[];
+    eventDepartmentData: eventData[];
+    eventGenderData: eventData[];
+    eventGradeData: eventData[];
 }
 
 interface AggregatedData {
@@ -72,15 +28,20 @@ const AllChartComponent: React.FC<AllChartComponentProps> = ({
     eventGenderData,
     eventGradeData,
 }) => {
-    const aggregateData = (eventData: any[], key: string): AggregatedData[] => {
+    console.log(eventAgeData);
+    const aggregateData = (eventData: eventData[], key: string): AggregatedData[] => {
         return eventData.reduce((accumulator: AggregatedData[], currentEventData) => {
-            for (const group in currentEventData[key]) {
+            // countsAry キーの存在を確認
+            const counts = currentEventData.countsAry; 
+            if (!counts) return accumulator;
+    
+            for (const group in counts) {
                 if (group === "無回答") continue;
                 const existingGroup = accumulator.find(item => item.name === group);
                 if (existingGroup) {
-                    existingGroup.value += currentEventData[key][group];
+                    existingGroup.value += counts[group];
                 } else {
-                    accumulator.push({ name: group, value: currentEventData[key][group] });
+                    accumulator.push({ name: group, value: counts[group] });
                 }
             }
             return accumulator;
@@ -88,6 +49,7 @@ const AllChartComponent: React.FC<AllChartComponentProps> = ({
     };
 
     const ageData = aggregateData(eventAgeData, "ageCounts");
+    console.log(ageData);
     const categoryData = aggregateData(eventCategoryData, "categoryCounts");
     const departmentData = aggregateData(eventDepartmentData, "departmentCounts");
     const genderData = aggregateData(eventGenderData, "genderCounts");
@@ -95,7 +57,7 @@ const AllChartComponent: React.FC<AllChartComponentProps> = ({
 
     return (
         <>
-            {user ? (
+            {user && ageData.length && categoryData.length && departmentData.length && genderData.length && gradeData.length ? (
                 <div className="flex flex-wrap">
                     <PieChartComponent data={ageData} type="age" colors={AGE_COLORS} />
                     <PieChartComponent data={categoryData} type="category" colors={CATEGORY_COLORS} />

@@ -5,24 +5,11 @@ import ViewingFreqDisplay from "./ViewingPieChart"
 import AllLegends from "./AllLegends"
 import { UserType } from "@/components/lib/nextauth";
 import { Skeleton } from "@/components/ui/skeleton";
+import { chartComponentProps } from "@/types"
 
-interface ViewingFreqComponentProps {
-    user: UserType | null
-    eventViewingFreqData: EventData[]
-}
-
-interface CountAry {
-    [viewing_freq: string]: number
-}
-
-interface EventData {
-    eventId: number
-    ViewingFreqCounts: CountAry
-}
-
-const ViewingFreqPieComponent: React.FC<ViewingFreqComponentProps> = ({
+const ViewingFreqPieComponent: React.FC<chartComponentProps> = ({
     user,
-    eventViewingFreqData
+    eventData
 }) => {
     return (
         <>
@@ -30,7 +17,7 @@ const ViewingFreqPieComponent: React.FC<ViewingFreqComponentProps> = ({
                 <>
                     <AllLegends type="viewingFreq" />
                     <div className="flex flex1">
-                    {eventViewingFreqData.map((eventData, index) => (
+                    {eventData.map((eventData, index) => (
                         <ViewingFreqDisplay key={eventData.eventId} eventData={eventData} />
                     ))}
                     </div>

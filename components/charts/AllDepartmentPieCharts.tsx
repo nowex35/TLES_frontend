@@ -3,26 +3,12 @@
 import React from "react"
 import DepartmentDisplay from "./DepartmentPieChart"
 import AllLegends from "./AllLegends"
-import { UserType } from "@/components/lib/nextauth";
 import { Skeleton } from "@/components/ui/skeleton";
+import { chartComponentProps } from "@/types"
 
-interface DepartmentPieComponentProps {
-    user: UserType | null
-    eventDepartmentData: EventData[]
-}
-
-interface CountAry {
-    [department: string]: number
-}
-
-interface EventData {
-    eventId: number
-    departmentCounts: CountAry
-}
-
-const DepartmentPieComponent: React.FC<DepartmentPieComponentProps> = ({
+const DepartmentPieComponent: React.FC<chartComponentProps> = ({
     user,
-    eventDepartmentData,
+    eventData,
 }) => {
     return (
         <>
@@ -30,7 +16,7 @@ const DepartmentPieComponent: React.FC<DepartmentPieComponentProps> = ({
                 <>
                     <AllLegends type="department" />
                     <div className="flex flex1">
-                    {eventDepartmentData.map((eventData, index) => (
+                    {eventData.map((eventData, index) => (
                         <DepartmentDisplay key={eventData.eventId} eventData={eventData} />
                     ))}
                     </div>

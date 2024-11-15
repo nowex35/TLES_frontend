@@ -1,19 +1,22 @@
-// utils/dataAggregator.ts
-export const aggregateData = (ticketData: any[], key: string, countKey: string) => {
-    return Object.values(ticketData.reduce((acc, ticket) => {
-        const eventId = ticket.event_id;
-        const countValue = ticket[countKey];
+import { eventData,daySalesAggregatedData, daySalesAggregatedDataArray, countAry, TimeSlotCounts } from '../../../types';
+export const aggregateData = (ticketData: any[], key: string, countKey: string): eventData[] => {
+    const aggregatedData = Object.values(ticketData.reduce<Record<string, eventData>>((acc, ticket) => {
+        const eventId = String(ticket.event_id);
+        const countValue = String(ticket[countKey]);
 
         if (!acc[eventId]) {
-            acc[eventId] = { eventId: Number(eventId), [key]: {} };
+            acc[eventId] = { eventId: Number(eventId), countsAry: {} };
         }
 
-        acc[eventId][key][countValue] = (acc[eventId][key][countValue] || 0) + 1;
+        acc[eventId].countsAry[countValue] = (acc[eventId].countsAry[countValue] || 0) + 1;
+
         return acc;
-    }, {}));
+    }, {})); //変更点：Object.valuesで値の配列を取得
+
+    return aggregatedData as eventData[];
 };
 
-export const aggregateSalesQuantity = (ticketData: any[], referralFilter: string) => {
+export const aggregateSalesQuantity = (ticketData: any[], referralFilter: string) : daySalesAggregatedDataArray => {
     return Object.values(ticketData.reduce((acc: any, ticket: any) => {
         const { event_id, purchase_datetime, quantity, referral_source } = ticket;
         const date = new Date(purchase_datetime).toISOString().split('T')[0];
@@ -38,26 +41,33 @@ export const aggregateSalesQuantity = (ticketData: any[], referralFilter: string
           }
 
         return acc;
-    }, {}));
+    }, {} as Record<string, daySalesAggregatedData>));
 };
 
-export const aggregateReferralSource = (ticketData: any[]) => {
-    return Object.values(ticketData.reduce((acc: any, ticket: any) => {
+export const aggregateReferralSource = (ticketData: any[]): eventData[] => {
+    const aggregatedData: { [eventId: number]: { eventId: number; refCounts: countAry } } = ticketData.reduce((acc, ticket) => {
         const { event_id, referral_source } = ticket;
+        const eventId = Number(event_id);
 
-        if (!acc[event_id]) {
-            acc[event_id] = { eventId: Number(event_id), refCounts: {} };
+        if (!acc[eventId]) {
+            acc[eventId] = { eventId: eventId, refCounts: {} };
         }
 
-        referral_source.split(',').map(source => source.trim()).forEach(source => {
-            if (!acc[event_id].refCounts[source]) {
-                acc[event_id].refCounts[source] = 0;
+        referral_source.split(',').map((source:string) => source.trim()).forEach((source:string) => {
+            if (!acc[eventId].refCounts[source]) {
+                acc[eventId].refCounts[source] = 0;
             }
-            acc[event_id].refCounts[source] += 1;
+            acc[eventId].refCounts[source] += 1;
         });
 
         return acc;
-    }, {}));
+    }, {} as { [eventId: number]: { eventId: number; refCounts: countAry } }); // 初期値の型指定
+
+
+    return Object.values(aggregatedData).map(({ eventId, refCounts }) => ({
+        eventId,
+        countsAry: refCounts,
+    }));
 };
 
 export const aggregateSalesQuantityByTimeSlot = (ticketData: any[], referralFilter: string) => {
@@ -96,7 +106,7 @@ export const aggregateSalesQuantityByTimeSlot = (ticketData: any[], referralFilt
             }
         });
         // 時間順にソートし、フィルタ売上割合を計算
-        event.timeSalesCounts = Object.entries(event.timeSalesCounts)
+        event.timeSalesCounts = Object.entries<TimeSlotCounts>(event.timeSalesCounts)
             .sort(([a], [b]) => a.localeCompare(b))
             .map(([timeSlot, counts]) => ({
                 timeSlot,
