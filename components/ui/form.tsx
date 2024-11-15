@@ -10,6 +10,8 @@ import {
   FieldValues,
   FormProvider,
   useFormContext,
+  FieldError,
+  FieldErrorsImpl,
 } from "react-hook-form"
 import { cn } from "@/components/lib/utils"
 import { Label } from "@/components/ui/label"
@@ -56,7 +58,7 @@ const useFormField = () => {
     invalid: false,
     isDirty: false,
     isTouched: false,
-    error: undefined
+    error: undefined as FieldError | (FieldError & FieldErrorsImpl< any> ) | undefined,
   }
 
   try {
@@ -64,7 +66,7 @@ const useFormField = () => {
       fieldState.invalid = !!(formState.errors && formState.errors[fieldContext.name])
       fieldState.isDirty = !!(formState.dirtyFields && formState.dirtyFields[fieldContext.name])
       fieldState.isTouched = !!(formState.touchedFields && formState.touchedFields[fieldContext.name])
-      fieldState.error = formState.errors?.[fieldContext.name]
+      fieldState.error = formState.errors?.[fieldContext.name] as FieldError | (FieldError & FieldErrorsImpl<any>) | undefined;
     }
   } catch (e) {
     console.warn("Error accessing form state:", e)
