@@ -7,7 +7,7 @@ interface AllLegendsProps {
 }
 
 const AllLegends: React.FC<AllLegendsProps> = ({ type }) => {
-    let legendData;
+    let legendData: { value: string; type: string; color: string; }[];
 
     switch (type) {
         case "gender":
