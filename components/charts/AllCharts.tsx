@@ -28,7 +28,6 @@ const AllChartComponent: React.FC<AllChartComponentProps> = ({
     eventGenderData,
     eventGradeData,
 }) => {
-    console.log(eventAgeData);
     const aggregateData = (eventData: eventData[], key: string): AggregatedData[] => {
         return eventData.reduce((accumulator: AggregatedData[], currentEventData) => {
             // countsAry キーの存在を確認
@@ -49,7 +48,6 @@ const AllChartComponent: React.FC<AllChartComponentProps> = ({
     };
 
     const ageData = aggregateData(eventAgeData, "ageCounts");
-    console.log(ageData);
     const categoryData = aggregateData(eventCategoryData, "categoryCounts");
     const departmentData = aggregateData(eventDepartmentData, "departmentCounts");
     const genderData = aggregateData(eventGenderData, "genderCounts");
