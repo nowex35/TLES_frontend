@@ -1,4 +1,5 @@
 "use server"
+import { getAuthSession } from "@/components/lib/nextauth"
 
 "共通のAPIリクエスト"
 const fetchAPI = async (url: string, options: RequestInit) => {
@@ -9,6 +10,14 @@ const fetchAPI = async (url: string, options: RequestInit) => {
     }
 
     try {
+        const session = await getAuthSession()
+        if (session?.accessToken) {
+            options.headers = {
+                ...options.headers,
+                Authorization: `JWT ${session.accessToken}`, // JWTをヘッダーに追加
+            };
+        }
+        
         const response = await fetch(`${apiUrl}${url}`, options)
 
         if (!response.ok) {
