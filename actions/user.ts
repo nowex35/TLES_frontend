@@ -28,7 +28,14 @@ const fetchAPI = async (url: string, options: RequestInit) => {
         return { success: true }
     } catch (error) {
         console.error("ネットワークエラーが発生しました:", error);
-        return { success: false, error: `ネットワークエラーが発生しました: ${error.message}` };
+    
+        // error がインスタンスでメッセージを持つ場合のみ処理する
+        if (error instanceof Error) {
+            return { success: false, error: `ネットワークエラーが発生しました: ${error.message}` };
+        }
+    
+        // error がそれ以外の型の場合
+        return { success: false, error: "ネットワークエラーが発生しました: 不明なエラー" };
     }
 }
 
