@@ -12,7 +12,9 @@ const fetchAPI = async (url: string, options: RequestInit) => {
         const response = await fetch(`${apiUrl}${url}`, options)
 
         if (!response.ok) {
-            return { success: false, error: "APIでエラーが発生しました" }
+            const error = await response.text(); // 詳細なエラー情報を取得
+            console.error(`API Error: ${response.status} ${response.statusText}: ${error}`);
+            return { success: false, error: `APIでエラーが発生しました: ${response.status} ${response.statusText}` };
         }
 
         //Content-Typeがapplication/jsonの場合のみJSONを解析
@@ -25,8 +27,8 @@ const fetchAPI = async (url: string, options: RequestInit) => {
         //データなしで成功を返す
         return { success: true }
     } catch (error) {
-        console.error(error)
-        return { success: false, error: "ネットワークエラーが発生しました" }
+        console.error("ネットワークエラーが発生しました:", error);
+        return { success: false, error: `ネットワークエラーが発生しました: ${error.message}` };
     }
 }
 
@@ -56,7 +58,7 @@ interface ticketDataProps {
 export const getTicketData = async () => {
     const options = {
         method: "GET",
-        cache: "force-cache" as RequestCache,
+        cache: "no-store" as RequestCache,
     }
 
     //チケットデータを取得
