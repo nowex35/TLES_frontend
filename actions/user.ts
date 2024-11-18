@@ -87,77 +87,77 @@ export const getTicketData = async () => {
 
     return { success: true, ticketData: ticketData }
 }
-interface TemporarrySignUpProps {
-    name: string
-    email: string
-    password: string
-    rePassword: string
-}
+// interface TemporarrySignUpProps {
+//     name: string
+//     email: string
+//     password: string
+//     rePassword: string
+// }
 
 
-//アカウントの仮登録
-export const temporarrySignup = async ({
-    name,
-    email,
-    password,
-    rePassword,
-}: TemporarrySignUpProps) => {
-    const body = JSON.stringify({
-        name,
-        email,
-        password,
-        re_password: rePassword,
-    })
-    //アカウントの仮登録を送信
-    const options = {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body,
-    }
+// //アカウントの仮登録
+// export const temporarrySignup = async ({
+//     name,
+//     email,
+//     password,
+//     rePassword,
+// }: TemporarrySignUpProps) => {
+//     const body = JSON.stringify({
+//         name,
+//         email,
+//         password,
+//         re_password: rePassword,
+//     })
+//     //アカウントの仮登録を送信
+//     const options = {
+//         method: "POST",
+//         headers: {
+//             "Content-Type": "application/json",
+//         },
+//         body,
+//     }
 
-    //アカウント仮登録を送信
-    const result = await fetchAPI("/api/auth/users/", options)
+//     //アカウント仮登録を送信
+//     const result = await fetchAPI("/api/auth/users/", options)
 
-    if (!result.success) {
-        console.error(result.error)
-        return { success: false }
-    }
+//     if (!result.success) {
+//         console.error(result.error)
+//         return { success: false }
+//     }
 
-    return { success: true }
-}
+//     return { success: true }
+// }
 
-interface CompleteSignupProps {
-    uid: string
-    token: string
-}
+// interface CompleteSignupProps {
+//     uid: string
+//     token: string
+// }
 
-//アカウント本登録
-export const completeSignup = async ({ uid, token }: CompleteSignupProps) => {
-    const body = JSON.stringify({
-        uid,
-        token,
-    })
+// //アカウント本登録
+// export const completeSignup = async ({ uid, token }: CompleteSignupProps) => {
+//     const body = JSON.stringify({
+//         uid,
+//         token,
+//     })
 
-    const options = {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body,
-    }
+//     const options = {
+//         method: "POST",
+//         headers: {
+//             "Content-Type": "application/json",
+//         },
+//         body,
+//     }
 
-    //アカウント本登録を送信
-    const result = await fetchAPI("/api/auth/users/activation/", options)
+//     //アカウント本登録を送信
+//     const result = await fetchAPI("/api/auth/users/activation/", options)
 
-    if (!result.success) {
-        console.error(result.error)
-        return { success: false }
-    }
+//     if (!result.success) {
+//         console.error(result.error)
+//         return { success: false }
+//     }
 
-    return { success: true }
-}
+//     return { success: true }
+// }
 
 interface ForgotPasswordProps {
     email: string

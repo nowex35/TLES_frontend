@@ -112,7 +112,7 @@ const Login = () => {
                 </form>
             </Form>
 
-            <div className="text-center mt-5">
+            {/* <div className="text-center mt-5">
                 <Link href="/reset-password" className="text-sm text-blue-500">
                     パスワードを忘れた方はこちら
                 </Link>
@@ -122,7 +122,7 @@ const Login = () => {
                 <Link href="/signup" className="text-sm text-blue-500">
                     アカウントを作成する
                 </Link>
-            </div>
+            </div> */}
         </div>
     )
 }
