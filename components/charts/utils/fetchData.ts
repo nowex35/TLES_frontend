@@ -1,4 +1,4 @@
-import { getTicketData } from "@/actions/user";
+import { getTicketData } from "@/actions/ticket";
 
 export const fetchData = async () => {
     try {
