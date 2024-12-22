@@ -1,4 +1,5 @@
 # 独自チケットデータ分析用アプリ
+![demo](https://github.com/user-attachments/assets/d0d9b796-a4d7-4539-8498-fa387aff071a)
 ## フロントエンド
 - Next.jsによるフロントエンド開発
 - フロント側の認証としてAuth.jsを使用
